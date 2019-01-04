@@ -1,11 +1,11 @@
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
-  region     = "${var.region}"
+  region = "${var.region}"
 }
 
 resource "aws_instance" "example_nig" {
-  ami           = "ami-2757f631"
+  ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"
   key_name = "nig_octo_aws"
   tags = {
@@ -21,3 +21,4 @@ resource "aws_instance" "example_nig" {
 resource "aws_eip" "ip" {
   instance = "${aws_instance.example_nig.id}"
 }
+
